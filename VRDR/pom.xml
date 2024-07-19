@@ -3,18 +3,19 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"> -->
 <project>
     <modelVersion>4.0.0</modelVersion>
-    <parent>
+    <!-- <parent>
         <groupId>edu.gatech</groupId>
         <artifactId>vital-records</artifactId>
         <version>4.0.4</version>
-    </parent>
+    </parent> -->
+    <groupId>edu.gatech</groupId>
 
     <version>4.0.4</version>
     <artifactId>vrdr</artifactId>
     <packaging>jar</packaging>
 
     <name>VRDR</name>
-    <url>https://github.com/nightingaleproject/vital-records-java/VRDR</url>
+    <url>https://github.com/nightingaleproject/vital-records-java</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

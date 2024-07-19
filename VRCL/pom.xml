@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
 
     <name>VRCL</name>
-    <url>https://github.com/nightingaleproject/vital-records-java/VRCL</url>
+    <url>https://github.com/nightingaleproject/vital-records-java</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -55,24 +55,6 @@
             <version>${fhir.version}</version>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>appassembler-maven-plugin</artifactId>
-                <version>2.1.0</version>
-                <configuration>
-                    <programs>
-                        <program>
-                            <mainClass>edu.gatech.chai.VRDR.cli.Console</mainClass>
-                            <id>app</id>
-                        </program>
-                    </programs>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
     <distributionManagement>
         <repository>
