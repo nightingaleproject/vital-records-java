@@ -8,7 +8,7 @@
     <packaging>jar</packaging>
 
     <name>VRCL</name>
-    <url>https://github.com/MortalityReporting/VRCL_Javalb</url>
+    <url>https://github.com/nightingaleproject/vital-records-java/VRCL</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -78,7 +78,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/nightingaleproject/VRDR_javalib</url>
+            <url>https://maven.pkg.github.com/nightingaleproject/vital-records-java</url>
         </repository>
     </distributionManagement>
 </project>

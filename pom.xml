@@ -7,9 +7,9 @@
     <artifactId>vital-records</artifactId>
     <version>4.0.4</version>
     <packaging>pom</packaging>
-
+<!--
     <name>VRDR_packaging</name>
-    <url>https://github.com/nightingaleproject/vital-records-java</url>
+    <url>https://github.com/nightingaleproject/vital-records-java</url> -->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,12 +22,4 @@
         <module>VRCL</module>
         <module>VRDR</module>
     </modules>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/nightingaleproject/vital-records-java</url>
-        </repository>
-    </distributionManagement>
 </project>

@@ -9,12 +9,12 @@
         <version>4.0.4</version>
     </parent>
 
-    <artifactId>vrdr</artifactId>
     <version>4.0.4</version>
+    <artifactId>vrdr</artifactId>
     <packaging>jar</packaging>
 
     <name>VRDR</name>
-    <url>https://github.com/nightingaleproject/vital-records-java</url>
+    <url>https://github.com/nightingaleproject/vital-records-java/VRDR</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
