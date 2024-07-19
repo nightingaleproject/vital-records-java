@@ -61,7 +61,7 @@
             <version>${fhir.version}</version>
         </dependency>
         <dependency>
-            <groupId>edu.gatech.chai</groupId>
+            <groupId>edu.gatech</groupId>
             <artifactId>vrcl</artifactId>
             <version>2.0.0</version>
         </dependency>
