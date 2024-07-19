@@ -2,9 +2,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>edu.gatech</groupId>
+    <groupId>edu.gatech.chai</groupId>
     <artifactId>vrcl</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.2</version>
     <packaging>jar</packaging>
 
     <name>VRCL</name>
@@ -60,7 +60,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/nightingaleproject/vital-records-java/vrcl</url>
+            <url>https://maven.pkg.github.com/nightingaleproject/vital-records-java</url>
         </repository>
     </distributionManagement>
 </project>

@@ -8,9 +8,9 @@
         <artifactId>vital-records</artifactId>
         <version>4.0.4</version>
     </parent> -->
-    <groupId>edu.gatech</groupId>
+    <groupId>edu.gatech.chai</groupId>
 
-    <version>4.0.4</version>
+    <version>4.0.5</version>
     <artifactId>vrdr</artifactId>
     <packaging>jar</packaging>
 
@@ -77,7 +77,7 @@
                 <configuration>
                     <programs>
                         <program>
-                            <mainClass>edu.gatech.chai.VRDR.cli.Console</mainClass>
+                            <mainClass>edu.gatech.chai.cli.Console</mainClass>
                             <id>app</id>
                         </program>
                     </programs>
@@ -90,7 +90,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/nightingaleproject/vital-records-java/vrdr</url>
+            <url>https://maven.pkg.github.com/nightingaleproject/vital-records-java</url>
         </repository>
     </distributionManagement>
 </project>
