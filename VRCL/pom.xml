@@ -60,7 +60,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/nightingaleproject/vital-records-java</url>
+            <url>https://maven.pkg.github.com/nightingaleproject/vital-records-java/vrcl</url>
         </repository>
     </distributionManagement>
 </project>
