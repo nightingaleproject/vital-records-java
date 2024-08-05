@@ -14,32 +14,32 @@ import org.hl7.fhir.r4.model.UnsignedIntType;
 import edu.gatech.chai.VRCL.model.CodedRaceAndEthnicity;
 import edu.gatech.chai.VRCL.model.InputRaceAndEthnicity;
 import edu.gatech.chai.VRCL.model.util.CodedRaceAndEthnicityUtil;
-import edu.gatech.chai.context.VRDRFhirContext;
-import edu.gatech.chai.messaging.AcknowledgementMessage;
-import edu.gatech.chai.messaging.BaseMessage;
-import edu.gatech.chai.messaging.CauseOfDeathCodingMessage;
-import edu.gatech.chai.messaging.CauseOfDeathCodingUpdateMessage;
-import edu.gatech.chai.messaging.DeathRecordAliasMessage;
-import edu.gatech.chai.messaging.DeathRecordSubmissionMessage;
-import edu.gatech.chai.messaging.DeathRecordUpdateMessage;
-import edu.gatech.chai.messaging.DeathRecordVoidMessage;
-import edu.gatech.chai.messaging.DemographicsCodingMessage;
-import edu.gatech.chai.messaging.DemographicsCodingUpdateMessage;
-import edu.gatech.chai.messaging.ExtractionErrorMessage;
-import edu.gatech.chai.messaging.StatusMessage;
-import edu.gatech.chai.messaging.util.MessageParseException;
-import edu.gatech.chai.model.CauseOfDeathCodedContentBundle;
-import edu.gatech.chai.model.CodingStatusValues;
-import edu.gatech.chai.model.DeathCertificate;
-import edu.gatech.chai.model.DeathCertificateDocument;
-import edu.gatech.chai.model.DemographicCodedContentBundle;
-import edu.gatech.chai.model.EntityAxisCauseOfDeath;
-import edu.gatech.chai.model.InjuryIncident;
-import edu.gatech.chai.model.RecordAxisCauseOfDeath;
-import edu.gatech.chai.model.util.CommonUtil;
-import edu.gatech.chai.model.util.DeathDateUtil;
-import edu.gatech.chai.model.util.MannerOfDeathUtil;
-import edu.gatech.chai.model.util.UploadUtil;
+import edu.gatech.chai.VRDR.context.VRDRFhirContext;
+import edu.gatech.chai.VRDR.messaging.AcknowledgementMessage;
+import edu.gatech.chai.VRDR.messaging.BaseMessage;
+import edu.gatech.chai.VRDR.messaging.CauseOfDeathCodingMessage;
+import edu.gatech.chai.VRDR.messaging.CauseOfDeathCodingUpdateMessage;
+import edu.gatech.chai.VRDR.messaging.DeathRecordAliasMessage;
+import edu.gatech.chai.VRDR.messaging.DeathRecordSubmissionMessage;
+import edu.gatech.chai.VRDR.messaging.DeathRecordUpdateMessage;
+import edu.gatech.chai.VRDR.messaging.DeathRecordVoidMessage;
+import edu.gatech.chai.VRDR.messaging.DemographicsCodingMessage;
+import edu.gatech.chai.VRDR.messaging.DemographicsCodingUpdateMessage;
+import edu.gatech.chai.VRDR.messaging.ExtractionErrorMessage;
+import edu.gatech.chai.VRDR.messaging.StatusMessage;
+import edu.gatech.chai.VRDR.messaging.util.MessageParseException;
+import edu.gatech.chai.VRDR.model.CauseOfDeathCodedContentBundle;
+import edu.gatech.chai.VRDR.model.CodingStatusValues;
+import edu.gatech.chai.VRDR.model.DeathCertificate;
+import edu.gatech.chai.VRDR.model.DeathCertificateDocument;
+import edu.gatech.chai.VRDR.model.DemographicCodedContentBundle;
+import edu.gatech.chai.VRDR.model.EntityAxisCauseOfDeath;
+import edu.gatech.chai.VRDR.model.InjuryIncident;
+import edu.gatech.chai.VRDR.model.RecordAxisCauseOfDeath;
+import edu.gatech.chai.VRDR.model.util.CommonUtil;
+import edu.gatech.chai.VRDR.model.util.DeathDateUtil;
+import edu.gatech.chai.VRDR.model.util.MannerOfDeathUtil;
+import edu.gatech.chai.VRDR.model.util.UploadUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -154,7 +154,7 @@ public class MessagingTest extends TestCase {
             DeathRecordSubmissionMessage submission = BaseMessage.parseJsonFile(DeathRecordSubmissionMessage.class, ctx, "src/test/resources/json/EmptySubmission.json");
             fail("Expected MessageParseException");
         } catch (MessageParseException ex) {
-            assertEquals("Error processing entry in the message: Failed to find a Bundle Entry containing a Resource of type edu.gatech.chai.model.DeathCertificateDocument", ex.getMessage());
+            assertEquals("Error processing entry in the message: Failed to find a Bundle Entry containing a Resource of type edu.gatech.chai.VRDR.model.DeathCertificateDocument", ex.getMessage());
             ExtractionErrorMessage errMsg = ex.createExtractionErrorMessage();
             assertEquals("http://nchs.cdc.gov/vrdr_submission", errMsg.getMessageSource());
             assertEquals("nightingale", errMsg.getMessageDestination());
@@ -1035,7 +1035,7 @@ public class MessagingTest extends TestCase {
             listOfMessages = BaseMessage.parseBundleOfBundles(ctx, bundleString);
             fail("Expected MessageParseException");
         } catch (MessageParseException ex) {
-            assertEquals("Error processing entry in the message: edu.gatech.chai.messaging.util.MessageParseException: Failed to find a Bundle Entry containing a Resource of type org.hl7.fhir.r4.model.OperationOutcome", ex.getMessage());
+            assertEquals("Error processing entry in the message: edu.gatech.chai.VRDR.messaging.util.MessageParseException: Failed to find a Bundle Entry containing a Resource of type org.hl7.fhir.r4.model.OperationOutcome", ex.getMessage());
         }
 
         try {
@@ -1045,7 +1045,7 @@ public class MessagingTest extends TestCase {
             listOfMessages = BaseMessage.parseBundleOfBundles(ctx, bundleString);
             fail("Expected MessageParseException");
         } catch (MessageParseException ex) {
-            assertEquals("Error processing entry in the message: edu.gatech.chai.messaging.util.MessageParseException: Failed to find a Bundle Entry containing a Resource of type org.hl7.fhir.r4.model.OperationOutcome", ex.getMessage());
+            assertEquals("Error processing entry in the message: edu.gatech.chai.VRDR.messaging.util.MessageParseException: Failed to find a Bundle Entry containing a Resource of type org.hl7.fhir.r4.model.OperationOutcome", ex.getMessage());
         }
     }
 

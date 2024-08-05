@@ -7,9 +7,14 @@ import java.util.List;
 
 import ca.uhn.fhir.context.ConfigurationException;
 import ca.uhn.fhir.parser.DataFormatException;
-import edu.gatech.chai.context.VRDRFhirContextDataStructuresOnly;
-import edu.gatech.chai.model.*;
-import edu.gatech.chai.model.util.BuildDCD;
+import edu.gatech.chai.VRDR.context.VRDRFhirContextDataStructuresOnly;
+import edu.gatech.chai.VRDR.model.DeathCertificateDocument;
+import edu.gatech.chai.VRDR.model.DeathDate;
+import edu.gatech.chai.VRDR.model.Decedent;
+import edu.gatech.chai.VRDR.model.InjuryIncident;
+import edu.gatech.chai.VRDR.model.MannerOfDeath;
+import edu.gatech.chai.VRDR.model.*;
+import edu.gatech.chai.VRDR.model.util.BuildDCD;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
