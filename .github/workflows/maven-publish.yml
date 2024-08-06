@@ -20,7 +20,9 @@ jobs:
         with:
           java-version: "21"
           distribution: "temurin"
+      - name: Install to local repository
+        run: mvn clean install
       - name: Publish package
-        run: mvn deploy --batch-mode -pl ${{ matrix.module }} -am clean install
+        run: mvn deploy --batch-mode -f ${{ matrix.module }}/pom.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
