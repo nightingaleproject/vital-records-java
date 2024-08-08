@@ -12,6 +12,7 @@ jobs:
       contents: read
       packages: write
     strategy:
+      fail-fast: false
       matrix:
         module: [VRDR, VRCL]
     steps:
@@ -20,9 +21,9 @@ jobs:
         with:
           java-version: "21"
           distribution: "temurin"
-      - name: Install to local repository
-        run: mvn clean install
+      # - name: Install to local repository
+        # run: mvn clean install
       - name: Publish package
-        run: mvn deploy --batch-mode -f ${{ matrix.module }}/pom.xml
+        run: mvn deploy --batch-mode -f ${{ matrix.module }}/pom.xml -am clean install
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
