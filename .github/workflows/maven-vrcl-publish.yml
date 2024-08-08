@@ -1,4 +1,4 @@
-name: Publish package to GitHub Packages
+name: Publish VRCL to GitHub Packages
 on:
   release:
     types: [created]
@@ -9,7 +9,7 @@ on:
       - "VRCL/*"
       - ".github/workflows/*"
 jobs:
-  publish-:
+  publish-vrcl:
     runs-on: ubuntu-latest
     permissions:
       contents: read

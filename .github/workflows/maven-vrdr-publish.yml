@@ -9,7 +9,7 @@ on:
       - "VRDR/*"
       - ".github/workflows/*"
 jobs:
-  publish-:
+  publish-vrdr:
     runs-on: ubuntu-latest
     permissions:
       contents: read
