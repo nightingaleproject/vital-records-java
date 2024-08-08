@@ -9,7 +9,6 @@
         <version>4.0.4</version>
     </parent> -->
     <groupId>edu.gatech.chai</groupId>
-
     <version>5.0.0-preview.1</version>
     <artifactId>vrdr</artifactId>
     <packaging>jar</packaging>

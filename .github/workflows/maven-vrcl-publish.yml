@@ -5,16 +5,14 @@ on:
   workflow_dispatch:
   push:
     branches: ["main"]
+    paths:
+      - "VRCL/*"
 jobs:
-  publish:
+  publish-:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-    strategy:
-      fail-fast: false
-      matrix:
-        module: [VRDR, VRCL]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -22,8 +20,9 @@ jobs:
           java-version: "21"
           distribution: "temurin"
       # - name: Install to local repository
-        # run: mvn clean install
+      #   run: mvn clean install
       - name: Publish package
-        run: mvn deploy --batch-mode -f ${{ matrix.module }}/pom.xml -am clean install
+        run: mvn deploy --batch-mode -f VRCL/pom.xml -am clean install
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
