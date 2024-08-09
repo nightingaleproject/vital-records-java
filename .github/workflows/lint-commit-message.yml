@@ -12,6 +12,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-tags: true
+          fetch-depth: 0
+      - run: ls
+      - run: git tag
       - name: Set up convco
         run: |
           curl -OL https://github.com/convco/convco/releases/latest/download/convco-deb.zip \
