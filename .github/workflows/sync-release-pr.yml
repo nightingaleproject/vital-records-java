@@ -23,7 +23,7 @@ jobs:
   release-pull-request:
     runs-on: ubuntu-latest
     needs: parse-commit
-    if: startsWith(needs.parse-commit.outputs.subject, 'chore(package):') != true
+    if: startsWith(needs.parse-commit.outputs.subject, 'chore(publish):') != true
     steps:
       - uses: actions/checkout@v4
         with:
@@ -36,12 +36,46 @@ jobs:
           curl -OL https://github.com/convco/convco/releases/latest/download/convco-deb.zip
           unzip convco-deb.zip
           sudo dpkg -i convco*.deb
-      - name: Fix child modules
+      - name: Get old version
+        id: old-version
         run: |
-          mvn versions:update-child-modules -N
-      - name: Bump version
+          echo "version=$(convco version)" >> $GITHUB_OUTPUT
+      - name: Get new version
+        id: new-version
         run: |
-          mvn versions:set -DnewVersion=$(convco version --bump)
+          echo "version=$(convco version --bump --paths VRDR --paths VRCL )" >> $GITHUB_OUTPUT
+      - name: Maven - Update child modules
+        run: |
+          mvn versions:update-child-modules -N --batch-mode
+      - name: Maven - Bump version
+        run: |
+          mvn versions:set -DnewVersion=${{ steps.new-version.outputs.version }} --batch-mode
+      - name: Create release Pull Request
+        uses: peter-evans/create-pull-request@v5
+        id: cpr
+        if: ${{ steps.new-version.outputs.version }} != ${{ steps.old-version.outputs.version }}
+        with:
+          token: ${{ secrets.BOT_TOKEN }}
+          commit-message: |
+            chore(publish): ${{ steps.new-version.outputs.version }}
+          title: |
+            chore(publish): ${{ steps.new-version.outputs.version }}
+          body: ""
+          branch: actions/release
+          reviewers: ${{ github.actor }}
+          delete-branch: true
+      - name: Check outputs
+        if: ${{ steps.cpr.outputs.pull-request-number }}
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+      - name: Enable auto-merge
+        if: ${{ steps.cpr.outputs.pull-request-number }}
+        run: |
+          gh pr merge ${{ steps.cpr.outputs.pull-request-number }} --auto -s
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       # - name
 
 
@@ -61,7 +95,7 @@ jobs:
       #   run: |
       #     versionize --proj-version-bump-logic --skip-tag --changelog-all
       # - name: Get current version
-      #   id: get-version
+      #   id: new-version
       #   run: |
       #     echo "version=$(versionize inspect)" >> $GITHUB_OUTPUT
       # - name: Create release Pull Request
@@ -70,9 +104,9 @@ jobs:
       #   with:
       #     token: ${{ secrets.BOT_TOKEN }}
       #     commit-message: |
-      #       chore(release): ${{ steps.get-version.outputs.version }}
+      #       chore(release): ${{ steps.new-version.outputs.version }}
       #     title: |
-      #       chore(release): ${{ steps.get-version.outputs.version }}
+      #       chore(release): ${{ steps.new-version.outputs.version }}
       #     body: ""
       #     branch: actions/release
       #     reviewers: ${{ github.actor }}
