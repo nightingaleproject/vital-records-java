@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>edu.gatech.chai</groupId>
-    <version>5.2.0</version>
+    <version>5.2.1</version>
     <artifactId>vrdr</artifactId>
     <packaging>jar</packaging>
 
@@ -63,7 +63,7 @@
         <dependency>
             <groupId>edu.gatech.chai</groupId>
             <artifactId>vrcl</artifactId>
-            <version>${project.version}</version>
+            <version>5.2.0</version>
         </dependency>
     </dependencies>
 

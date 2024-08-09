@@ -26,7 +26,7 @@ public class InjuryIncident extends Observation implements PartialDateTimable {
 		this();
 		addPlaceOfInjuryComponent(placeOfInjury);
 		addInjuredAtWorkComponent(injuredAtWorkBoolean);
-		addTransportationEventIndicatorComponent(transportationRelationship);
+		addTransportationRoleIndicatorComponent(transportationRelationship);
 	}
 
 	public InjuryIncident(Decedent decendent, CodeableConcept placeOfInjury, CodeableConcept injuredAtWorkBoolean,
@@ -34,11 +34,12 @@ public class InjuryIncident extends Observation implements PartialDateTimable {
 		this();
 		addPlaceOfInjuryComponent(placeOfInjury);
 		addInjuredAtWorkComponent(injuredAtWorkBoolean);
-		addTransportationEventIndicatorComponent(transportationRelationship);
+		addTransportationRoleIndicatorComponent(transportationRelationship);
 	}
 
 	public void addPlaceOfInjuryComponent(String placeOfInjury) {
-		CodeableConcept placeOfInjuryCode = CommonUtil.findConceptFromCollectionUsingSimpleString(placeOfInjury, InjuryIncidentUtil.placeOfInjuryValueSet);
+		CodeableConcept placeOfInjuryCode = new CodeableConcept();
+		placeOfInjuryCode.setText(placeOfInjury);
 		addPlaceOfInjuryComponent(placeOfInjuryCode);
 	}
 
@@ -47,9 +48,9 @@ public class InjuryIncident extends Observation implements PartialDateTimable {
 		addInjuredAtWorkComponent(injuredAtWorkCode);
 	}
 
-	public void addTransportationEventIndicatorComponent(String transportationRelationship) {
-		CodeableConcept transportationEventIndicatorCode = CommonUtil.findConceptFromCollectionUsingSimpleString(transportationRelationship, CommonUtil.yesNoUnknownSet);
-		addTransportationEventIndicatorComponent(transportationEventIndicatorCode);
+	public void addTransportationRoleIndicatorComponent(String transportationRelationship) {
+		CodeableConcept transportationEventIndicatorCode = CommonUtil.findConceptFromCollectionUsingSimpleString(transportationRelationship, InjuryIncidentUtil.transportationRoleValueSet);
+		addTransportationRoleIndicatorComponent(transportationEventIndicatorCode);
 	}
 
 	public void addPlaceOfInjuryComponent(CodeableConcept placeOfInjury) {
@@ -66,7 +67,7 @@ public class InjuryIncident extends Observation implements PartialDateTimable {
 		addComponent(component);
 	}
 
-	public void addTransportationEventIndicatorComponent(CodeableConcept transportationRelationship) {
+	public void addTransportationRoleIndicatorComponent(CodeableConcept transportationRelationship) {
 		ObservationComponentComponent component = new ObservationComponentComponent();
 		component.setCode(InjuryIncidentUtil.componentTransportationEventIndicator);
 		component.setValue(transportationRelationship);
