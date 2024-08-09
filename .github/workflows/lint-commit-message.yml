@@ -16,9 +16,9 @@ jobs:
       - run: git tag
       - name: Set up convco
         run: |
-          curl -OL https://github.com/convco/convco/releases/latest/download/convco-deb.zip \
-          && unzip convco-deb.zip \
-          && sudo dpkg -i convco*.deb
+          curl -OL https://github.com/convco/convco/releases/latest/download/convco-deb.zip
+          unzip convco-deb.zip
+          sudo dpkg -i convco*.deb
       - run: convco version
       # - uses: actions/setup-node@v3
       #   with:
