@@ -33,9 +33,9 @@ jobs:
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
       - name: Set up convco
         run: |
-          curl -OL https://github.com/convco/convco/releases/latest/download/convco-deb.zip
-          unzip convco-deb.zip
-          sudo dpkg -i convco*.deb
+          curl https://github.com/convco/convco/releases/latest/download/convco-deb.zip -o /tmp/convco-deb.zip
+          unzip /tmp/convco-deb.zip
+          sudo dpkg -i /tmp/convco*.deb
       - name: Get old version
         id: old-version
         run: |
