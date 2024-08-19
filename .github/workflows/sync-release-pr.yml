@@ -33,9 +33,9 @@ jobs:
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
       - name: Set up convco
         run: |
-          curl -OL https://github.com/convco/convco/releases/latest/download/convco-deb.zip > convco-deb.zip
-          unzip convco-deb.zip
-          sudo dpkg -i convco*.deb
+          curl -L https://github.com/convco/convco/releases/latest/download/convco-deb.zip -o /tmp/convco-deb.zip
+          unzip /tmp/convco-deb.zip
+          sudo dpkg -i /tmp/convco*.deb
       - name: Get old version
         id: old-version
         run: |
@@ -46,10 +46,10 @@ jobs:
           echo "version=$(convco version --bump --paths VRDR --paths VRCL )" >> $GITHUB_OUTPUT
       - name: Maven - Update child modules
         run: |
-          mvn versions:update-child-modules -N --batch-mode
+          mvn versions:update-child-modules -N --batch-mode --no-transfer-progress
       - name: Maven - Bump version
         run: |
-          mvn versions:set -DnewVersion=${{ steps.new-version.outputs.version }} --batch-mode
+          mvn versions:set -DnewVersion=${{ steps.new-version.outputs.version }} --batch-mode --no-transfer-progress
       - name: Create release Pull Request
         uses: peter-evans/create-pull-request@v5
         id: cpr
