@@ -16,7 +16,7 @@ jobs:
       - name: Verify with Maven
         run: mvn verify
       - name: Check commit messages
-        uses: convco/convco-action
+        uses: convco/convco-action@v0.1.1
         with:
           command: check
 
