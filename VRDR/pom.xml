@@ -10,7 +10,7 @@
     <parent>
         <groupId>edu.gatech.chai</groupId>
         <artifactId>vital-records</artifactId>
-        <version>5.2.1</version>
+        <version>5.2.2</version>
     </parent>
 
     <name>VRDR</name>

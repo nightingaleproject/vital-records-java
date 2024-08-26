@@ -7,7 +7,7 @@ import ca.uhn.fhir.model.api.annotation.ResourceDef;
 import edu.gatech.chai.USCore.model.USCorePractitioner;
 import edu.gatech.chai.USCore.model.util.CommonUtil;
 
-@ResourceDef(name = "Patient", profile = "http://hl7.org/fhir/us/vr-common-library/StructureDefinition/Practitioner-vr")
+@ResourceDef(name = "Practitioner", profile = "http://hl7.org/fhir/us/vr-common-library/StructureDefinition/Practitioner-vr")
 public class PractitionerVitalRecords extends USCorePractitioner {
 
 	public PractitionerVitalRecords() {

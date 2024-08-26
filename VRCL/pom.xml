@@ -4,13 +4,13 @@
 
     <groupId>edu.gatech.chai</groupId>
     <artifactId>vrcl</artifactId>
-    <version>5.2.0</version>
+    <version>5.2.1</version>
     <packaging>jar</packaging>
 
     <parent>
         <groupId>edu.gatech.chai</groupId>
         <artifactId>vital-records</artifactId>
-        <version>5.2.1</version>
+        <version>5.2.2</version>
     </parent>
 
     <name>VRCL</name>
