@@ -46,7 +46,7 @@ public class DeathDate extends Observation implements PartialDateTimable {
 		ObservationComponentComponent component = new ObservationComponentComponent();
 		component.setCode(DeathDateUtil.componentPlaceOfDeathCode);
 		CodeableConcept ccPoD = CommonUtil.findConceptFromCollectionUsingSimpleString(placeOfDeath, DeathDateUtil.placeOfDeathTypeSet);
-		component.setCode(ccPoD);
+		component.setValue(ccPoD);
 		addComponent(component);
 	}
 }
