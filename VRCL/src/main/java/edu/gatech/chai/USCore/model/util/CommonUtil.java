@@ -23,8 +23,8 @@ public class CommonUtil {
 	public static final String icd10SystemUrl = "http://hl7.org/fhir/ValueSet/icd-10";
 
 	public static final String locationJurisdictionURL = "https://www.usps.com/";
-	public static final String dataAbsentReasonUrl = "http://unitsofmeasure.org";
-	public static final String unitsOfMeasureUrl = "http://terminology.hl7.org/CodeSystem/data-absent-reason";
+	public static final String dataAbsentReasonUrl = "http://terminology.hl7.org/CodeSystem/data-absent-reason";
+	public static final String unitsOfMeasureUrl = "http://unitsofmeasure.org";
 	public static final String missingValueReasonUrl = "http://hl7.org/fhir/us/vrdr/CodeSystem/vrdr-missing-value-reason-cs";
 	public static final String partialDatePartAbsentReasonURL = "http://hl7.org/fhir/us/vrdr/StructureDefinition/vrdr-Partial-date-part-absent-reason";
 	public static final String partialDateDateYearURL = "date-year";
