@@ -1,6 +1,7 @@
 package edu.gatech.chai.VRDR.model;
 
 import java.util.Date;
+import java.util.Iterator;
 
 import org.hl7.fhir.r4.model.*;
 
@@ -49,4 +50,22 @@ public class DeathDate extends Observation implements PartialDateTimable {
 		component.setValue(ccPoD);
 		addComponent(component);
 	}
+
+	public CodeableConcept getPlaceOfDeathComponentValue() {
+		Iterator<Observation.ObservationComponentComponent> var1 = this.getComponent().iterator();
+  
+		while(var1.hasNext()) {
+		   Observation.ObservationComponentComponent comp = (Observation.ObservationComponentComponent)var1.next();
+		   Iterator<Coding> var3 = comp.getCode().getCoding().iterator();
+  
+		   while(var3.hasNext()) {
+			  Coding compCoding = (Coding)var3.next();
+			  if ("http://loinc.org".equals(compCoding.getSystem()) && "58332-8".equals(compCoding.getCode())) {
+				 return comp.getValueCodeableConcept();
+			  }
+		   }
+		}
+  
+		return null;
+	 }
 }
