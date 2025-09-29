@@ -5,11 +5,8 @@
 
     <groupId>edu.gatech.chai</groupId>
     <artifactId>vital-records</artifactId>
-    <version>5.2.3</version>
+    <version>5.2.2</version>
     <packaging>pom</packaging>
-<!--
-    <name>VRDR_packaging</name>
-    <url>https://github.com/nightingaleproject/vital-records-java</url> -->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
