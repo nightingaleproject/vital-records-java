@@ -13,7 +13,6 @@ import edu.gatech.chai.VRDR.model.DeathDate;
 import edu.gatech.chai.VRDR.model.Decedent;
 import edu.gatech.chai.VRDR.model.InjuryIncident;
 import edu.gatech.chai.VRDR.model.MannerOfDeath;
-import edu.gatech.chai.VRDR.model.*;
 import edu.gatech.chai.VRDR.model.util.BuildDCD;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -59,11 +58,7 @@ public class AppTest
 		DeathCertificateDocument deathCertificateDocument = null;
 		try {
 			deathCertificateDocument = (DeathCertificateDocument) context.getCtx().newJsonParser().parseResource(new FileInputStream(file));
-		} catch (ConfigurationException e) {
-			e.printStackTrace();
-		} catch (DataFormatException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
+		} catch (ConfigurationException | DataFormatException | FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		String encoded = context.getCtx().newJsonParser().encodeResourceToString(deathCertificateDocument);

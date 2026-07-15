@@ -1,13 +1,13 @@
 package edu.gatech.chai.VRDR.messaging;
 
-import ca.uhn.fhir.model.api.annotation.ResourceDef;
-import edu.gatech.chai.VRDR.model.DeathCertificateDocument;
-
 import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.IntegerType;
 import org.hl7.fhir.r4.model.MessageHeader;
 import org.hl7.fhir.r4.model.ResourceType;
-import org.hl7.fhir.r4.model.IntegerType;
 import org.hl7.fhir.r4.model.UnsignedIntType;
+
+import ca.uhn.fhir.model.api.annotation.ResourceDef;
+import edu.gatech.chai.VRDR.model.DeathCertificateDocument;
 
 @ResourceDef(name = "DeathRecordVoidMessage", profile = "http://cdc.gov/nchs/nvss/fhir/vital-records-messaging/StructureDefinition/VRM-DeathRecordVoidMessage")
 public class DeathRecordVoidMessage extends BaseMessage {
@@ -58,10 +58,10 @@ public class DeathRecordVoidMessage extends BaseMessage {
         if (!messageParameters.hasParameter("block_count")) {
             return null;
         }
-        if (!(messageParameters.getParameter("block_count") instanceof IntegerType)) {
+        if (!(messageParameters.getParameter("block_count").getValue() instanceof IntegerType)) {
             return null;
         }
-        UnsignedIntType blockCountType = (UnsignedIntType) messageParameters.getParameter("block_count");
+        UnsignedIntType blockCountType = (UnsignedIntType) messageParameters.getParameter("block_count").getValue();
         if (blockCountType == null) {
             return new UnsignedIntType(1);
         }

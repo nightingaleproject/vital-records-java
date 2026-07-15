@@ -1,11 +1,11 @@
 package edu.gatech.chai.VRDR.messaging;
 
-import ca.uhn.fhir.model.api.annotation.ResourceDef;
 import org.hl7.fhir.r4.model.Bundle;
 import org.hl7.fhir.r4.model.IntegerType;
-import org.hl7.fhir.r4.model.UnsignedIntType;
 import org.hl7.fhir.r4.model.MessageHeader;
-import org.hl7.fhir.r4.model.ResourceType;
+import org.hl7.fhir.r4.model.UnsignedIntType;
+
+import ca.uhn.fhir.model.api.annotation.ResourceDef;
 
 @ResourceDef(name = "AcknowledgementMessage", profile = "http://cdc.gov/nchs/nvss/fhir/vital-records-messaging/StructureDefinition/VRM-AcknowledgementMessage")
 public class AcknowledgementMessage extends BaseMessage {
@@ -75,10 +75,10 @@ public class AcknowledgementMessage extends BaseMessage {
         if (!messageParameters.hasParameter("block_count")) {
             return null;
         }
-        if (!(messageParameters.getParameter("block_count") instanceof IntegerType)) {
+        if (!(messageParameters.getParameter("block_count").getValue() instanceof IntegerType)) {
             return null;
         }
-        UnsignedIntType blockCountType = (UnsignedIntType) messageParameters.getParameter("block_count");
+        UnsignedIntType blockCountType = (UnsignedIntType) messageParameters.getParameter("block_count").getValue();
         if (blockCountType == null) {
             return null;
         }

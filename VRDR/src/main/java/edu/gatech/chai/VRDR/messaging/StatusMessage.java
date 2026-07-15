@@ -1,7 +1,11 @@
 package edu.gatech.chai.VRDR.messaging;
 
+import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.MessageHeader;
+import org.hl7.fhir.r4.model.StringType;
+import org.hl7.fhir.r4.model.Type;
+
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
-import org.hl7.fhir.r4.model.*;
 
 @ResourceDef(name = "StatusMessage", profile = "http://cdc.gov/nchs/nvss/fhir/vital-records-messaging/StructureDefinition/VRM-StatusMessage")
 public class StatusMessage extends BaseMessage {
@@ -62,7 +66,7 @@ public class StatusMessage extends BaseMessage {
     }
 
     public String getStatus() {
-        Type type = messageParameters.getParameter("status");
+        Type type = messageParameters.getParameter("status").getValue();
         if (type instanceof StringType) {
             return ((StringType) type).getValue();
         }

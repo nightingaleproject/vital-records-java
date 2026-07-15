@@ -884,7 +884,8 @@ public class MessagingTest extends TestCase {
         DeathRecordSubmissionMessage submission = BaseMessage.parseJsonFile(DeathRecordSubmissionMessage.class, ctx, "src/test/resources/json/DeathRecordSubmissionMessage.json");
         ExtractionErrorMessage err = new ExtractionErrorMessage(submission);
         assertEquals("http://nchs.cdc.gov/vrdr_extraction_error", err.getMessageType());
-        assertEquals(submission.getId(), err.getFailedMessageId());
+        // Compare bare IDs (without resource type prefix)
+        assertEquals(BaseMessage.ensureBareId(submission.getId()), err.getFailedMessageId());
         assertEquals(submission.getMessageSource(), err.getMessageDestination());
         assertEquals(submission.getStateAuxiliaryId(), err.getStateAuxiliaryId());
         assertEquals(submission.getCertNo(), err.getCertNo());
@@ -979,16 +980,17 @@ public class MessagingTest extends TestCase {
         BaseMessage responseBundle = BaseMessage.parseJsonFile(AcknowledgementMessage.class, ctx, "src/test/resources/json/AcknowledgementMessage.json");
 
         // add different types of messages or inner bundles to the outer bundle
-        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(DeathRecordSubmissionMessage.class, ctx, "src/test/resources/json/DeathRecordSubmissionMessage.json")));
-        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(DeathRecordUpdateMessage.class, ctx, "src/test/resources/json/DeathRecordUpdateMessage.json")));
-        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(AcknowledgementMessage.class, ctx, "src/test/resources/json/AcknowledgementMessage.json")));
-        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(DeathRecordVoidMessage.class, ctx, "src/test/resources/json/DeathRecordVoidMessage.json")));
-        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(DeathRecordAliasMessage.class, ctx, "src/test/resources/json/DeathRecordAliasMessage.json")));
-        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(CauseOfDeathCodingMessage.class, ctx, "src/test/resources/json/CauseOfDeathCodingMessage.json")));
-        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(CauseOfDeathCodingUpdateMessage.class, ctx, "src/test/resources/json/CauseOfDeathCodingUpdateMessage.json")));
-        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(DemographicsCodingMessage.class, ctx, "src/test/resources/json/DemographicsCodingMessage.json")));
-        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(DemographicsCodingUpdateMessage.class, ctx, "src/test/resources/json/DemographicsCodingUpdateMessage.json")));
-        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(StatusMessage.class, ctx, "src/test/resources/json/StatusMessage.json")));
+        // Convert each BaseMessage to Bundle before adding to avoid custom resource type names
+        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(DeathRecordSubmissionMessage.class, ctx, "src/test/resources/json/DeathRecordSubmissionMessage.json").cloneAsBundle()));
+        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(DeathRecordUpdateMessage.class, ctx, "src/test/resources/json/DeathRecordUpdateMessage.json").cloneAsBundle()));
+        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(AcknowledgementMessage.class, ctx, "src/test/resources/json/AcknowledgementMessage.json").cloneAsBundle()));
+        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(DeathRecordVoidMessage.class, ctx, "src/test/resources/json/DeathRecordVoidMessage.json").cloneAsBundle()));
+        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(DeathRecordAliasMessage.class, ctx, "src/test/resources/json/DeathRecordAliasMessage.json").cloneAsBundle()));
+        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(CauseOfDeathCodingMessage.class, ctx, "src/test/resources/json/CauseOfDeathCodingMessage.json").cloneAsBundle()));
+        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(CauseOfDeathCodingUpdateMessage.class, ctx, "src/test/resources/json/CauseOfDeathCodingUpdateMessage.json").cloneAsBundle()));
+        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(DemographicsCodingMessage.class, ctx, "src/test/resources/json/DemographicsCodingMessage.json").cloneAsBundle()));
+        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(DemographicsCodingUpdateMessage.class, ctx, "src/test/resources/json/DemographicsCodingUpdateMessage.json").cloneAsBundle()));
+        responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(StatusMessage.class, ctx, "src/test/resources/json/StatusMessage.json").cloneAsBundle()));
 
         // convert the loaded outer bundle, or bundle of bundles, to String
         String bundleString = responseBundle.toJson(ctx);
@@ -1030,7 +1032,7 @@ public class MessagingTest extends TestCase {
 
         // test parsing deficient messages that cause thrown exceptions
         try {
-            responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(ExtractionErrorMessage.class, ctx, "src/test/resources/json/ExtractionErrorMessage.json")));
+            responseBundle.addEntry(new Bundle.BundleEntryComponent().setResource(BaseMessage.parseJsonFile(ExtractionErrorMessage.class, ctx, "src/test/resources/json/ExtractionErrorMessage.json").cloneAsBundle()));
             bundleString = responseBundle.toJson(ctx);
             listOfMessages = BaseMessage.parseBundleOfBundles(ctx, bundleString);
             fail("Expected MessageParseException");

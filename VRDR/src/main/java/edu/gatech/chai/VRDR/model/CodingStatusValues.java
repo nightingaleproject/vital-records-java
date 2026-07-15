@@ -1,6 +1,10 @@
 package edu.gatech.chai.VRDR.model;
 
-import org.hl7.fhir.r4.model.*;
+import org.hl7.fhir.r4.model.CodeableConcept;
+import org.hl7.fhir.r4.model.Extension;
+import org.hl7.fhir.r4.model.IntegerType;
+import org.hl7.fhir.r4.model.Parameters;
+import org.hl7.fhir.r4.model.StringType;
 
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
 import edu.gatech.chai.VRDR.model.util.CodingStatusValuesUtil;
@@ -58,11 +62,11 @@ public class CodingStatusValues extends Parameters {
 	}
 
 	public Integer getCoderStatus() {
-		return getParameter("coderStatus") == null ? null : ((IntegerType)getParameter("coderStatus")).getValue();
+		return getParameter("coderStatus") == null ? null : ((IntegerType)getParameter("coderStatus").getValue()).getValue();
 	}
 
 	public String getShipmentNumber() {
-		return getParameter("shipmentNumber") == null ? null : ((StringType)getParameter("shipmentNumber")).getValue();
+		return getParameter("shipmentNumber") == null ? null : ((StringType)getParameter("shipmentNumber").getValue()).getValue();
 	}
 
 	public static final String PartialDateExtensionUrl = "http://hl7.org/fhir/us/vrdr/StructureDefinition/PartialDate";
@@ -74,7 +78,24 @@ public class CodingStatusValues extends Parameters {
 		if (getParameter("receiptDate") == null) {
 			return null;
 		}
-		Extension partialDate = getParameter("receiptDate").getExtensionByUrl(PartialDateExtensionUrl);
+		ParametersParameterComponent receiptDateParam = getParameter("receiptDate");
+		
+		// Extensions on date values are stored in the element itself (_valueDate field in JSON)
+		// In the FHIR model, this is accessed via the value's extension list
+		Extension partialDate = null;
+		
+		// First, try to get extensions from the parameter itself
+		partialDate = receiptDateParam.getExtensionByUrl(PartialDateExtensionUrl);
+		
+		// If not found, try to get from the value element (for _valueDate case)
+		if (partialDate == null && receiptDateParam.getValue() != null) {
+			// Check if the value has extensions
+			if (receiptDateParam.getValue() instanceof org.hl7.fhir.r4.model.Type) {
+				org.hl7.fhir.r4.model.Type typeValue = (org.hl7.fhir.r4.model.Type) receiptDateParam.getValue();
+				partialDate = typeValue.getExtensionByUrl(PartialDateExtensionUrl);
+			}
+		}
+		
 		if (partialDate == null) {
 			return null;
 		}
@@ -82,7 +103,14 @@ public class CodingStatusValues extends Parameters {
 		if (datePart == null || datePart.getValue() == null) {
 			return null;
 		}
-		return ((IntegerType)datePart.getValue()).getValue();
+		
+		// Handle both IntegerType and UnsignedIntType
+		if (datePart.getValue() instanceof IntegerType) {
+			return ((IntegerType)datePart.getValue()).getValue();
+		} else if (datePart.getValue() instanceof org.hl7.fhir.r4.model.UnsignedIntType) {
+			return ((org.hl7.fhir.r4.model.UnsignedIntType)datePart.getValue()).getValue();
+		}
+		return null;
 	}
 
 	public Integer getReceiptYear() {

@@ -1,8 +1,33 @@
 package edu.gatech.chai.VRDR.messaging;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.UUID;
+
+import org.hl7.fhir.r4.model.Address;
+import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.DateTimeType;
+import org.hl7.fhir.r4.model.DateType;
+import org.hl7.fhir.r4.model.Extension;
+import org.hl7.fhir.r4.model.IntegerType;
+import org.hl7.fhir.r4.model.MessageHeader;
+import org.hl7.fhir.r4.model.Parameters;
+import org.hl7.fhir.r4.model.Reference;
+import org.hl7.fhir.r4.model.Resource;
+import org.hl7.fhir.r4.model.StringType;
+import org.hl7.fhir.r4.model.UnsignedIntType;
+import org.hl7.fhir.r4.model.UriType;
+
 import ca.uhn.fhir.parser.IParser;
+import ca.uhn.fhir.parser.JsonParser;
 import ca.uhn.fhir.parser.LenientErrorHandler;
-import ca.uhn.fhir.parser.JsonParser4BundleOfBundles;
 import edu.gatech.chai.VRDR.context.VRDRFhirContext;
 import edu.gatech.chai.VRDR.messaging.util.DocumentBundler;
 import edu.gatech.chai.VRDR.messaging.util.MessageParseException;
@@ -12,11 +37,6 @@ import edu.gatech.chai.VRDR.model.DeathLocation;
 import edu.gatech.chai.VRDR.model.util.AddressUtil;
 import edu.gatech.chai.VRDR.model.util.CommonUtil;
 import edu.gatech.chai.VRDR.model.util.DeathCertificateDocumentUtil;
-import org.hl7.fhir.r4.model.*;
-
-import java.io.*;
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
 
 public class BaseMessage extends Bundle {
 
@@ -54,6 +74,11 @@ public class BaseMessage extends Bundle {
     public static String ensureBareId(String id) {
         if (id != null && id.startsWith("urn:uuid:")) {
             id = id.substring("urn:uuid:".length(), id.length());
+        }
+        // Strip resource type prefix (e.g., "Bundle/", "Patient/", etc.)
+        if (id != null && id.contains("/")) {
+            int slashIndex = id.indexOf('/');
+            id = id.substring(slashIndex + 1);
         }
         return id;
     }
@@ -272,8 +297,8 @@ public class BaseMessage extends Bundle {
     }
 
     public Integer getCertNo() {
-        if (messageParameters.hasParameter("cert_no") && messageParameters.getParameter("cert_no") instanceof IntegerType) {
-            IntegerType certNoIntegerType = (IntegerType) messageParameters.getParameter("cert_no");
+        if (messageParameters.hasParameter("cert_no") && messageParameters.getParameter("cert_no").getValue() instanceof IntegerType) {
+            IntegerType certNoIntegerType = (IntegerType) messageParameters.getParameter("cert_no").getValue();
             if (certNoIntegerType.hasValue()) {
                 return certNoIntegerType.getValue();
             } else {
@@ -296,8 +321,8 @@ public class BaseMessage extends Bundle {
     }
 
     public String getStateAuxiliaryId() {
-        if (messageParameters.hasParameter("state_auxiliary_id") && messageParameters.getParameter("state_auxiliary_id") instanceof StringType) {
-            StringType stateAuxiliaryIdStringType = (StringType) messageParameters.getParameter("state_auxiliary_id");
+        if (messageParameters.hasParameter("state_auxiliary_id") && messageParameters.getParameter("state_auxiliary_id").getValue() instanceof StringType) {
+            StringType stateAuxiliaryIdStringType = (StringType) messageParameters.getParameter("state_auxiliary_id").getValue();
             if (stateAuxiliaryIdStringType.hasValue()) {
                 return stateAuxiliaryIdStringType.getValue();
             } else {
@@ -314,17 +339,25 @@ public class BaseMessage extends Bundle {
     }
 
     public Integer getDeathYear() {
-        if (messageParameters.hasParameter() && messageParameters.getParameter("death_year") instanceof IntegerType) {
-            IntegerType deathYearIntegerType = (IntegerType) messageParameters.getParameter("death_year");
-            if (deathYearIntegerType.hasValue()) {
-                return deathYearIntegerType.getValue();
-            } else {
-                return null;
-            }
-        }
-        else {
+        if (messageParameters == null || !messageParameters.hasParameter()) {
             return null;
         }
+        Parameters.ParametersParameterComponent param = messageParameters.getParameter("death_year");
+        if (param == null || param.getValue() == null) {
+            return null;
+        }
+        if (param.getValue() instanceof IntegerType) {
+            IntegerType deathYearIntegerType = (IntegerType) param.getValue();
+            if (deathYearIntegerType.hasValue()) {
+                return deathYearIntegerType.getValue();
+            }
+        } else if (param.getValue() instanceof UnsignedIntType) {
+            UnsignedIntType deathYearUnsignedIntType = (UnsignedIntType) param.getValue();
+            if (deathYearUnsignedIntType.hasValue()) {
+                return deathYearUnsignedIntType.getValue();
+            }
+        }
+        return null;
     }
 
     public void setDeathYear(Integer value) {
@@ -338,8 +371,8 @@ public class BaseMessage extends Bundle {
     }
 
     public String getJurisdictionId() {
-        if (messageParameters.hasParameter("jurisdiction_id") && messageParameters.getParameter("jurisdiction_id") instanceof StringType) {
-            StringType jurisdictionIdStringType = (StringType) messageParameters.getParameter("jurisdiction_id");
+        if (messageParameters.hasParameter("jurisdiction_id") && messageParameters.getParameter("jurisdiction_id").getValue() instanceof StringType) {
+            StringType jurisdictionIdStringType = (StringType) messageParameters.getParameter("jurisdiction_id").getValue();
             if (jurisdictionIdStringType.hasValue()) {
                 return jurisdictionIdStringType.getValue();
             } else {
@@ -481,7 +514,7 @@ public class BaseMessage extends Bundle {
     }
 
     public static <T extends Bundle> T parseJsonBundleOfBundles(Class<T> tClass, VRDRFhirContext ctx, String jsonString) {
-        return parse(tClass, new JsonParser4BundleOfBundles(ctx.getCtx(), new LenientErrorHandler()), null, jsonString);
+        return parse(tClass, new JsonParser(ctx.getCtx(), new LenientErrorHandler()), null, jsonString);
     }
 
     public static <T extends Bundle> T parseXMLFile(Class<T> tClass, VRDRFhirContext ctx, String filePath) {

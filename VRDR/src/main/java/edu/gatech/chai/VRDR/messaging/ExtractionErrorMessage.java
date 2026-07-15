@@ -21,7 +21,7 @@ public class ExtractionErrorMessage extends BaseMessage {
     }
 
     public ExtractionErrorMessage(BaseMessage sourceMessage) {
-        this(sourceMessage == null ? null : sourceMessage.getId(),
+        this(sourceMessage == null ? null : BaseMessage.ensureBareId(sourceMessage.getId()),
                 sourceMessage == null ? null : sourceMessage.getMessageSource(),
                 sourceMessage == null ? null : sourceMessage.getMessageDestination());
         setCertNo(sourceMessage == null ? null : sourceMessage.getCertNo());

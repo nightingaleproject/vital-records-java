@@ -1,11 +1,16 @@
 package edu.gatech.chai.VRDR.messaging;
 
+import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.HumanName;
+import org.hl7.fhir.r4.model.Identifier;
+import org.hl7.fhir.r4.model.StringType;
+import org.hl7.fhir.r4.model.Type;
+
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
 import edu.gatech.chai.VRDR.model.DeathCertificateDocument;
 import edu.gatech.chai.VRDR.model.Decedent;
 import edu.gatech.chai.VRDR.model.DecedentFather;
 import edu.gatech.chai.VRDR.model.util.DecedentUtil;
-import org.hl7.fhir.r4.model.*;
 
 @ResourceDef(name = "DeathRecordAliasMessage", profile = "http://cdc.gov/nchs/nvss/fhir/vital-records-messaging/StructureDefinition/VRM-DeathRecordAliasMessage")
 public class DeathRecordAliasMessage extends BaseMessage {
@@ -69,7 +74,10 @@ public class DeathRecordAliasMessage extends BaseMessage {
     }
 
     public String getAliasDecedentFirstName() {
-        Type type = messageParameters.getParameter("alias_decedent_first_name");
+        if (messageParameters == null || messageParameters.getParameter("alias_decedent_first_name") == null) {
+            return null;
+        }
+        Type type = messageParameters.getParameter("alias_decedent_first_name").getValue();
         if (type instanceof StringType) {
             return ((StringType) type).getValue();
         }
@@ -81,7 +89,10 @@ public class DeathRecordAliasMessage extends BaseMessage {
     }
 
     public String getAliasDecedentLastName() {
-        Type type = messageParameters.getParameter("alias_decedent_last_name");
+        if (messageParameters == null || messageParameters.getParameter("alias_decedent_last_name") == null) {
+            return null;
+        }
+        Type type = messageParameters.getParameter("alias_decedent_last_name").getValue();
         if (type instanceof StringType) {
             return ((StringType) type).getValue();
         }
@@ -93,7 +104,10 @@ public class DeathRecordAliasMessage extends BaseMessage {
     }
 
     public String getAliasDecedentMiddleName() {
-        Type type = messageParameters.getParameter("alias_decedent_middle_name");
+        if (messageParameters == null || messageParameters.getParameter("alias_decedent_middle_name") == null) {
+            return null;
+        }
+        Type type = messageParameters.getParameter("alias_decedent_middle_name").getValue();
         if (type instanceof StringType) {
             return ((StringType) type).getValue();
         }
@@ -105,7 +119,10 @@ public class DeathRecordAliasMessage extends BaseMessage {
     }
 
     public String getAliasDecedentNameSuffix() {
-        Type type = messageParameters.getParameter("alias_decedent_name_suffix");
+        if (messageParameters == null || messageParameters.getParameter("alias_decedent_name_suffix") == null) {
+            return null;
+        }
+        Type type = messageParameters.getParameter("alias_decedent_name_suffix").getValue();
         if (type instanceof StringType) {
             return ((StringType) type).getValue();
         }
@@ -117,7 +134,10 @@ public class DeathRecordAliasMessage extends BaseMessage {
     }
 
     public String getAliasFatherSurname() {
-        Type type = messageParameters.getParameter("alias_father_surname");
+        if (messageParameters == null || messageParameters.getParameter("alias_father_surname") == null) {
+            return null;
+        }
+        Type type = messageParameters.getParameter("alias_father_surname").getValue();
         if (type instanceof StringType) {
             return ((StringType) type).getValue();
         }
@@ -129,7 +149,10 @@ public class DeathRecordAliasMessage extends BaseMessage {
     }
 
     public String getAliasSocialSecurityNumber() {
-        Type type = messageParameters.getParameter("alias_social_security_number");
+        if (messageParameters == null || messageParameters.getParameter("alias_social_security_number") == null) {
+            return null;
+        }
+        Type type = messageParameters.getParameter("alias_social_security_number").getValue();
         if (type instanceof StringType) {
             return ((StringType) type).getValue();
         }
