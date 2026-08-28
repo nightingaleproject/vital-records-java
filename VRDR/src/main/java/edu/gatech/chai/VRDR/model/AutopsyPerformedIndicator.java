@@ -1,4 +1,4 @@
-package edu.gatech.chai.VRCL.model;
+package edu.gatech.chai.VRDR.model;
 
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Observation;
@@ -6,9 +6,10 @@ import org.hl7.fhir.r4.model.Reference;
 
 import ca.uhn.fhir.model.api.annotation.ResourceDef;
 import edu.gatech.chai.USCore.model.util.CommonUtil;
-import edu.gatech.chai.VRCL.model.util.AutopsyPerformedIndicatorUtil;
+import edu.gatech.chai.VRCL.model.PatientVitalRecords;
+import edu.gatech.chai.VRDR.model.util.AutopsyPerformedIndicatorUtil;
 
-@ResourceDef(name = "Observation", profile = "http://hl7.org/fhir/us/vr-common-library/StructureDefinition/Observation-autopsy-performed-indicator-vr")
+@ResourceDef(name = "Observation", profile = "http://hl7.org/fhir/us/vrdr/StructureDefinition/vrdr-autopsy-performed-indicator")
 public class AutopsyPerformedIndicator extends Observation {
 
 	public AutopsyPerformedIndicator() {

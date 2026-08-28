@@ -4,16 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import edu.gatech.chai.VRCL.model.AutopsyPerformedIndicator;
+import org.hl7.fhir.r4.model.Bundle;
+import org.hl7.fhir.r4.model.Coding;
+import org.hl7.fhir.r4.model.Composition.CompositionStatus;
+import org.hl7.fhir.r4.model.DateTimeType;
+import org.hl7.fhir.r4.model.Extension;
+import org.hl7.fhir.r4.model.ExtraDateTimeType;
+import org.hl7.fhir.r4.model.Observation;
+import org.hl7.fhir.r4.model.Resource;
+import org.hl7.fhir.r4.model.StringType;
+import org.hl7.fhir.r4.model.TimeType;
+import org.hl7.fhir.r4.model.Type;
+
+import ca.uhn.fhir.model.api.annotation.ResourceDef;
 import edu.gatech.chai.VRCL.model.InputRaceAndEthnicity;
 import edu.gatech.chai.VRCL.model.ObservationEducationLevel;
 import edu.gatech.chai.VRCL.model.ObservationUsualWork;
 import edu.gatech.chai.VRDR.context.VRDRFhirContext;
-
-import org.hl7.fhir.r4.model.*;
-import org.hl7.fhir.r4.model.Composition.CompositionStatus;
-
-import ca.uhn.fhir.model.api.annotation.ResourceDef;
 import edu.gatech.chai.VRDR.model.util.CommonUtil;
 import edu.gatech.chai.VRDR.model.util.DeathCertificateDocumentUtil;
 
@@ -73,7 +80,7 @@ public class DeathCertificateDocument extends Bundle {
 	//Helper Accessor methods
 
 	private List<Resource> getRecords(Class<? extends Resource> type){
-		List<Resource> returnList = new ArrayList<Resource>();
+		List<Resource> returnList = new ArrayList<>();
 		for(BundleEntryComponent bec:this.getEntry()) {
 			Resource resource = bec.getResource();
 			if(type.isInstance(resource)) {
@@ -128,7 +135,7 @@ public class DeathCertificateDocument extends Bundle {
 
 	public List<DeathDate> getDeathDate(){
 		List<Resource> resources = getRecords(DeathDate.class);
-		if(resources.size()>0) {
+		if(!resources.isEmpty()) {
 			DeathDate deathDate = (DeathDate)resources.get(0);
 			if(deathDate == null || deathDate.getValue() == null || deathDate.dateTimeValue() == null || !deathDate.dateTimeValue().hasTime()) {
 				extraDateTimeType4Death = new ExtraDateTimeType();
@@ -222,7 +229,7 @@ public class DeathCertificateDocument extends Bundle {
 
 	public List<InjuryIncident> getInjuryIncident(){
 		List<Resource> resources = getRecords(InjuryIncident.class);
-		if(resources.size()>0) {
+		if(!resources.isEmpty()) {
 			InjuryIncident injuryIncident = (InjuryIncident)resources.get(0);
 			if(injuryIncident == null || injuryIncident.getEffectiveDateTimeType() == null || injuryIncident.dateTimeValue() == null || !injuryIncident.dateTimeValue().hasTime()) {
 				extraDateTimeType4Injury = new ExtraDateTimeType();
@@ -251,7 +258,7 @@ public class DeathCertificateDocument extends Bundle {
 	}
 
 	public String getDateOfDeathPronouncement() {
-		if (this == null || getDeathDate() == null || getDeathDate().size() == 0) {
+		if (getDeathDate() == null || getDeathDate().isEmpty()) {
 			return null;
 		}
 		for (DeathDate date : getDeathDate()) {

@@ -1,13 +1,9 @@
 package edu.gatech.chai.VRDR.context;
 
 import ca.uhn.fhir.context.FhirContext;
-import edu.gatech.chai.USCore.model.USCorePractitioner;
 import edu.gatech.chai.VRCL.context.VRCLFhirContext;
-import edu.gatech.chai.VRCL.model.AutopsyPerformedIndicator;
-import edu.gatech.chai.VRCL.model.CodedRaceAndEthnicity;
-import edu.gatech.chai.VRCL.model.EmergingIssues;
-import edu.gatech.chai.VRCL.model.InputRaceAndEthnicity;
 import edu.gatech.chai.VRCL.model.ObservationUsualWork;
+import edu.gatech.chai.VRDR.model.ActivityAtTimeOfDeath;
 import edu.gatech.chai.VRDR.model.AutomatedUnderlyingCauseOfDeath;
 import edu.gatech.chai.VRDR.model.BirthRecordIdentifier;
 import edu.gatech.chai.VRDR.model.CauseOfDeathCodedContentBundle;
@@ -41,8 +37,6 @@ import edu.gatech.chai.VRDR.model.PlaceOfInjury;
 import edu.gatech.chai.VRDR.model.RecordAxisCauseOfDeath;
 import edu.gatech.chai.VRDR.model.SurgeryDate;
 import edu.gatech.chai.VRDR.model.TobaccoUseContributedToDeath;
-import edu.gatech.chai.VRDR.model.*;
-import org.hl7.fhir.r4.model.Practitioner;
 
 public class VRDRFhirContextDataStructuresOnly extends VRCLFhirContext{
 	public VRDRFhirContextDataStructuresOnly() {

@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import edu.gatech.chai.VRCL.model.AutopsyPerformedIndicator;
+import edu.gatech.chai.VRDR.model.AutopsyPerformedIndicator;
 import edu.gatech.chai.VRCL.model.InputRaceAndEthnicity;
 import edu.gatech.chai.VRCL.model.ObservationEducationLevel;
 import edu.gatech.chai.VRDR.model.BirthRecordIdentifier;

@@ -8,6 +8,8 @@ import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Observation;
 import org.hl7.fhir.r4.model.Observation.ObservationStatus;
 
+import edu.gatech.chai.USCore.model.util.CommonUtil;
+
 public class AutopsyPerformedIndicatorUtil {
 	public static final CodeableConcept code = new CodeableConcept()
 			.addCoding(new Coding(CommonUtil.loincSystemUrl, "85699-7", "Autopsy was performed"));

@@ -3,17 +3,16 @@ package edu.gatech.chai.VRDR.model.util;
 import org.hl7.fhir.r4.model.CodeableConcept;
 import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.Composition;
-import org.hl7.fhir.r4.model.Extension;
-import org.hl7.fhir.r4.model.StringType;
 import org.hl7.fhir.r4.model.Composition.CompositionStatus;
 
-import edu.gatech.chai.VRCL.model.AutopsyPerformedIndicator;
 import edu.gatech.chai.VRCL.model.CodedRaceAndEthnicity;
 import edu.gatech.chai.VRCL.model.EmergingIssues;
 import edu.gatech.chai.VRCL.model.InputRaceAndEthnicity;
 import edu.gatech.chai.VRCL.model.ObservationEducationLevel;
 import edu.gatech.chai.VRCL.model.ObservationUsualWork;
+import edu.gatech.chai.VRDR.model.ActivityAtTimeOfDeath;
 import edu.gatech.chai.VRDR.model.AutomatedUnderlyingCauseOfDeath;
+import edu.gatech.chai.VRDR.model.AutopsyPerformedIndicator;
 import edu.gatech.chai.VRDR.model.BirthRecordIdentifier;
 import edu.gatech.chai.VRDR.model.CauseOfDeathPart1;
 import edu.gatech.chai.VRDR.model.CauseOfDeathPart2;
@@ -41,7 +40,6 @@ import edu.gatech.chai.VRDR.model.PlaceOfInjury;
 import edu.gatech.chai.VRDR.model.RecordAxisCauseOfDeath;
 import edu.gatech.chai.VRDR.model.SurgeryDate;
 import edu.gatech.chai.VRDR.model.TobaccoUseContributedToDeath;
-import edu.gatech.chai.VRDR.model.ActivityAtTimeOfDeath;
 
 public class DeathCertificateUtil {
 	public static final CompositionStatus status = CompositionStatus.FINAL;
